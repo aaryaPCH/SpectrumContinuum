@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Continuum Asset Library";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@section Scripts
+{
+    <!-- Asset Library Index scripts -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".list-group-item").click(onFolderSelect);
+        });
+
+        function onFolderSelect(e) {
+            var currentlySelectedItem = $(".list-group-item.active");
+            currentlySelectedItem.removeClass("active");
+            collapse(currentlySelectedItem);
+            $(e.target).addClass("active");
+            expand($(e.target));
+        }
+
+        function collapse(itemToCollapse) {
+            itemToCollapse.children().remove();
+        }
+
+        function expand(itemToExpand) {
+            $(".list-group-item").each(function(index, listItem) {
+                if (itemToExpand[0] != listItem) {
+                    itemToExpand.append($(listItem).clone());
+                }
+            });
+            
+            itemToExpand.hide();
+            itemToExpand.slideDown(500);
+        }
+    </script>
+}
+
+<h2>Continuum Asset Library</h2>
+<div class="list-group">
+  <a href="#" class="list-group-item active">
+    Cras justo odio
+  </a>
+  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+  <a href="#" class="list-group-item">Morbi leo risus</a>
+  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+  <a href="#" class="list-group-item">Vestibulum at eros</a>
+</div>
