@@ -1,0 +1,12 @@
+﻿.hiddenFolder
+{
+    display: none;
+}
+
+.visibleFolder
+{
+    display: block;
+    transition-property: background, height;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+}

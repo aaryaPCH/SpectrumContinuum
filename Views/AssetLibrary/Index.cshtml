@@ -3,46 +3,64 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
+@section Css
+{
+    <link rel="stylesheet" type="text/css" href="~/Content/asset-library.css" />
+}
+
 @section Scripts
 {
-    <!-- Asset Library Index scripts -->
     <script type="text/javascript">
-        $(document).ready(function() {
-            $(".list-group-item").click(onFolderSelect);
+        var continuum = angular.module("Continuum", []);
+        continuum.controller("AssetLibController", function ($scope) {
+            $scope.folder = {
+                expanded: true,
+                children: [
+                    { name: "Cras justo odio" },
+                    {
+                        name: "Dapibus ac facilisis in",
+                        children: [
+                            { name: "Child 1" },
+                            {
+                                name: "Child 2",
+                                children: [
+                                    { name: "Child 2a" },
+                                    {
+                                        name: "Child 2b",
+                                        children: [
+                                            { name: "Child 2b'" },
+                                            { name: "Child 2b''" },
+                                            { name: "Child 2b'''" }
+                                        ]
+                                    },
+                                    { name: "Child 2c" }
+                                ]
+                            },
+                            { name: "Child 3" }
+                        ]
+                    },
+                    { name: "Morbi leo risus" },
+                    { name: "Porta ac consectetur ac" },
+                    { name: "Vestibulum at eros" }]
+            };
+            $scope.onFolderClick = function ($event) {
+                $event.stopPropagation();
+                var folder = this.folder;
+                // toggle folder state
+                folder.expanded = !folder.expanded;
+                
+                // todo: collapse all other folders
+            };
         });
-
-        function onFolderSelect(e) {
-            var currentlySelectedItem = $(".list-group-item.active");
-            currentlySelectedItem.removeClass("active");
-            collapse(currentlySelectedItem);
-            $(e.target).addClass("active");
-            expand($(e.target));
-        }
-
-        function collapse(itemToCollapse) {
-            itemToCollapse.children().remove();
-        }
-
-        function expand(itemToExpand) {
-            $(".list-group-item").each(function(index, listItem) {
-                if (itemToExpand[0] != listItem) {
-                    itemToExpand.append($(listItem).clone());
-                }
-            });
-            
-            itemToExpand.hide();
-            itemToExpand.slideDown(500);
-        }
     </script>
 }
 
+<script id="folderTemplate.html" type="text/ng-template">
+    <span>{{ folder.name }}</span>
+    <a ng-repeat="folder in folder.children" ng-include="'folderTemplate.html'" class="list-group-item" ng-class="{active:folder.expanded, hiddenFolder:!$parent.$parent.folder.expanded, visibleFolder:$parent.$parent.folder.expanded}" ng-click="onFolderClick($event)"></a>
+</script>
+
 <h2>Continuum Asset Library</h2>
-<div class="list-group">
-  <a href="#" class="list-group-item active">
-    Cras justo odio
-  </a>
-  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-  <a href="#" class="list-group-item">Morbi leo risus</a>
-  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-  <a href="#" class="list-group-item">Vestibulum at eros</a>
+<div class="list-group" ng-controller="AssetLibController">
+    <div ng-model="folder" ng-include="'folderTemplate.html'"></div>
 </div>
