@@ -5,62 +5,23 @@
 
 @section Css
 {
-    <link rel="stylesheet" type="text/css" href="~/Content/asset-library.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/App/asset-library.css" />
 }
 
 @section Scripts
 {
-    <script type="text/javascript">
-        var continuum = angular.module("Continuum", []);
-        continuum.controller("AssetLibController", function ($scope) {
-            $scope.folder = {
-                expanded: true,
-                children: [
-                    { name: "Cras justo odio" },
-                    {
-                        name: "Dapibus ac facilisis in",
-                        children: [
-                            { name: "Child 1" },
-                            {
-                                name: "Child 2",
-                                children: [
-                                    { name: "Child 2a" },
-                                    {
-                                        name: "Child 2b",
-                                        children: [
-                                            { name: "Child 2b'" },
-                                            { name: "Child 2b''" },
-                                            { name: "Child 2b'''" }
-                                        ]
-                                    },
-                                    { name: "Child 2c" }
-                                ]
-                            },
-                            { name: "Child 3" }
-                        ]
-                    },
-                    { name: "Morbi leo risus" },
-                    { name: "Porta ac consectetur ac" },
-                    { name: "Vestibulum at eros" }]
-            };
-            $scope.onFolderClick = function ($event) {
-                $event.stopPropagation();
-                var folder = this.folder;
-                // toggle folder state
-                folder.expanded = !folder.expanded;
-                
-                // todo: collapse all other folders
-            };
-        });
-    </script>
+    <script src="~/Scripts/App/assetService.js"></script>
+    <script src="~/Scripts/App/assetLibrary.js"></script>
 }
 
-<script id="folderTemplate.html" type="text/ng-template">
-    <span>{{ folder.name }}</span>
-    <a ng-repeat="folder in folder.children" ng-include="'folderTemplate.html'" class="list-group-item" ng-class="{active:folder.expanded, hiddenFolder:!$parent.$parent.folder.expanded, visibleFolder:$parent.$parent.folder.expanded}" ng-click="onFolderClick($event)"></a>
+<script id="itemTemplate.html" type="text/ng-template">
+    <span class="glyphicon" ng-class="{'glyphicon-folder-close':isClosedFolder(item), 'glyphicon-folder-open':isOpenFolder(item), 'glyphicon-briefcase':isPackage(item)}"></span>
+    <span>{{ item.name }}</span>
+    <a ng-repeat="item in item.children" ng-include="'itemTemplate.html'" class="list-group-item" ng-class="{active:item.expanded, hiddenItem:!$parent.$parent.item.expanded, visibleItem:$parent.$parent.item.expanded}" ng-click="onItemClick($event)"></a>
+
 </script>
 
 <h2>Continuum Asset Library</h2>
 <div class="list-group" ng-controller="AssetLibController">
-    <div ng-model="folder" ng-include="'folderTemplate.html'"></div>
+    <div ng-model="folder" ng-include="'itemTemplate.html'"></div>
 </div>

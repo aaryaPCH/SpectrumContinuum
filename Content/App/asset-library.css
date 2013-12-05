@@ -1,9 +1,9 @@
-﻿.hiddenFolder
+﻿.hiddenItem
 {
     display: none;
 }
 
-.visibleFolder
+.visibleItem
 {
     display: block;
     transition-property: background, height;
