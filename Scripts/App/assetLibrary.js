@@ -1,11 +1,10 @@
-﻿var continuum = continuum || angular.module("Continuum", []);
-continuum.controller("AssetLibController", function ($scope) {
+﻿function assetLibController($scope, assetService) {
     // Init
     $scope.item = {
         expanded: true,
         children: [],
     };
-    $scope.assetService = new continuum.AssetService();
+    $scope.assetService = new assetService();
     $scope.assetService.getRootFolders(function (rootFolders) {
         $scope.item.children = rootFolders;
         $scope.$apply();
@@ -78,4 +77,8 @@ continuum.controller("AssetLibController", function ($scope) {
         // no match found
         return false;
     }
-});
+}
+
+var continuum = continuum || angular.module("Continuum", []);
+assetLibController.$inject = ["$scope", "assetService"];
+continuum.controller("AssetLibController", assetLibController);

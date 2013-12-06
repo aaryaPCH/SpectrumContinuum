@@ -1,6 +1,5 @@
-﻿var continuum = continuum || angular.module("Continuum", []);
-continuum.AssetService = (function ($module) {
-    var waitTime = 2000;
+﻿var assetService = function () {
+    var waitTime = 500;
     function assetService() {
     };
 
@@ -26,4 +25,7 @@ continuum.AssetService = (function ($module) {
     };
 
     return assetService;
-}(continuum));
+};
+
+var continuum = continuum || angular.module("Continuum", []);
+continuum.factory("assetService", assetService);

@@ -7,6 +7,6 @@
 {
     display: block;
     transition-property: background, height;
-    transition-duration: 2s;
+    transition-duration: 0.5s;
     transition-timing-function: linear;
 }
