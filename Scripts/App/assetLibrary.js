@@ -79,6 +79,5 @@
     }
 }
 
-var continuum = continuum || angular.module("Continuum", []);
 assetLibController.$inject = ["$scope", "assetService"];
-continuum.controller("AssetLibController", assetLibController);
+angular.module("Continuum").controller("AssetLibController", assetLibController);

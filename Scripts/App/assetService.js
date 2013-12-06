@@ -1,4 +1,4 @@
-﻿var assetService = function () {
+﻿var assetServiceFactory = function () {
     var waitTime = 500;
     function assetService() {
     };
@@ -27,5 +27,4 @@
     return assetService;
 };
 
-var continuum = continuum || angular.module("Continuum", []);
-continuum.factory("assetService", assetService);
+angular.module("Continuum").factory("assetService", assetServiceFactory);
